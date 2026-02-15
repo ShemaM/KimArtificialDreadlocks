@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+/* Custom Theme Colors for Kim's Dreadlocks & Nails Spa */
+:root {
+  /* Primary Pink Gradient Colors */
+  --primary-pink-light: #FFB6C1;
+  --primary-pink: #FF69B4;
+  --primary-pink-dark: #DB2777;
+  
+  /* Background Colors */
+  --background: #FFFAF5;
+  --cream: #FFF8F0;
+  --cream-dark: #FFF0E5;
+  
+  /* Text Colors */
+  --charcoal: #2D3436;
+  --charcoal-light: #636E72;
+  --text-muted: #B2BEC3;
+  
+  /* Rasta Accent Colors */
+  --rasta-red: #E31C3D;
+  --rasta-yellow: #FFD700;
+  --rasta-green: #00A550;
+  
+  /* Additional Theme Colors */
+  --white: #FFFFFF;
+  --soft-shadow: rgba(0, 0, 0, 0.05);
+
+  /* Font Families */
+  --font-playfair: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-poppins: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+@theme inline {
+  /* Colors */
+  --color-background: var(--background);
+  --color-foreground: var(--charcoal);
+  --color-cream: var(--cream);
+  --color-cream-dark: var(--cream-dark);
+  --color-charcoal: var(--charcoal);
+  --color-charcoal-light: var(--charcoal-light);
+  --color-text-muted: var(--text-muted);
+  
+  /* Pink Theme */
+  --color-pink-light: var(--primary-pink-light);
+  --color-pink: var(--primary-pink);
+  --color-pink-dark: var(--primary-pink-dark);
+  
+  /* Rasta Colors */
+  --color-rasta-red: var(--rasta-red);
+  --color-rasta-yellow: var(--rasta-yellow);
+  --color-rasta-green: var(--rasta-green);
+
+  /* Font Family Theme Variables */
+  --font-family-playfair: var(--font-playfair);
+  --font-family-poppins: var(--font-poppins);
+}
+
+/* Base Styles */
+body {
+  background: var(--cream);
+  color: var(--charcoal);
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+}
+
+/* Heading Styles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), 'Playfair Display', serif;
+}
+
+/* Utility Classes */
+.font-playfair {
+  font-family: var(--font-playfair), 'Playfair Display', serif;
+}
+
+.font-poppins {
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+}
+
+/* Pink Gradient */
+.gradient-pink {
+  background: linear-gradient(135deg, var(--primary-pink-light) 0%, var(--primary-pink) 50%, var(--primary-pink-dark) 100%);
+}
+
+.gradient-pink-soft {
+  background: linear-gradient(135deg, rgba(255, 182, 193, 0.3) 0%, rgba(255, 105, 180, 0.2) 100%);
+}
+
+/* Rasta Stripe */
+.rasta-stripe {
+  background: linear-gradient(90deg, 
+    var(--rasta-red) 0%, 
+    var(--rasta-red) 33.33%, 
+    var(--rasta-yellow) 33.33%, 
+    var(--rasta-yellow) 66.66%, 
+    var(--rasta-green) 66.66%, 
+    var(--rasta-green) 100%
+  );
+}
+
+/* Smooth Shadows */
+.shadow-soft {
+  box-shadow: 0 4px 20px var(--soft-shadow);
+}
+
+.shadow-soft-lg {
+  box-shadow: 0 10px 40px var(--soft-shadow);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-pink);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-pink-dark);
+}
+
+/* Selection Color */
+::selection {
+  background: var(--primary-pink-light);
+  color: var(--charcoal);
+}
