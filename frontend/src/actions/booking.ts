@@ -18,13 +18,15 @@ interface NotificationResult {
   whatsappCustomerSent: boolean;
 }
 
-// Initialize clients
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize clients - only create if API keys are available
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
-const twilioClient = twilio(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
-);
+const twilioClient =
+  process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN
+    ? twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
+    : null;
 
 // Constants
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "shemamanase992@gmail.com";
@@ -79,6 +81,10 @@ async function sendAdminEmail(
   serviceName: string,
   formattedDate: string
 ): Promise<boolean> {
+  if (!resend) {
+    console.warn("Resend client not initialized - RESEND_API_KEY not set");
+    return false;
+  }
   try {
     await resend.emails.send({
       from: "Kim's Spa <noreply@kimsspa.com>",
@@ -114,6 +120,10 @@ async function sendAdminWhatsApp(
   serviceName: string,
   formattedDate: string
 ): Promise<boolean> {
+  if (!twilioClient) {
+    console.warn("Twilio client not initialized - credentials not set");
+    return false;
+  }
   try {
     await twilioClient.messages.create({
       body: `🎉 *New Booking Request*\n\n👤 Customer: ${data.customerName}\n💇 Service: ${serviceName}\n📅 Date: ${formattedDate}\n📱 Phone: ${data.phone}`,
@@ -138,6 +148,10 @@ async function sendCustomerWhatsApp(
   serviceName: string,
   formattedDate: string
 ): Promise<boolean> {
+  if (!twilioClient) {
+    console.warn("Twilio client not initialized - credentials not set");
+    return false;
+  }
   try {
     const customerNumber = formatWhatsAppNumber(data.phone);
     await twilioClient.messages.create({
