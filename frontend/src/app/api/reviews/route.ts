@@ -9,6 +9,42 @@ interface ReviewPayload {
   comment: string;
 }
 
+export async function GET(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    
+    // Build query string for Payload CMS
+    const queryString = searchParams.toString();
+    const url = queryString
+      ? `${PAYLOAD_API_URL}/reviews?${queryString}`
+      : `${PAYLOAD_API_URL}/reviews`;
+
+    const response = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      next: { revalidate: 60 }, // Cache for 60 seconds
+    });
+
+    if (!response.ok) {
+      console.error("Payload API error:", response.status);
+      return NextResponse.json(
+        { error: "Failed to fetch reviews" },
+        { status: response.status }
+      );
+    }
+
+    const data = await response.json();
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error("Error fetching reviews:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body: ReviewPayload = await request.json();
