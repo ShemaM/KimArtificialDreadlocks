@@ -9,6 +9,7 @@ import { Services } from './collections/Services';
 import { Gallery } from './collections/Gallery';
 import { Bookings } from './collections/Bookings';
 import { Media } from './collections/Media';
+import { Reviews } from './collections/Reviews';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -28,6 +29,7 @@ export default buildConfig({
     Gallery,
     Bookings,
     Media,
+    Reviews,
   ],
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET || 'super-secret-payload-key-change-in-production',
