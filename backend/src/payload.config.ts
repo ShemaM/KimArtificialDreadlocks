@@ -19,8 +19,10 @@ export default buildConfig({
     user: Users.slug,
     meta: {
       titleSuffix: " - Kim's Spa Admin",
-      favicon: '/favicon.ico',
-      ogImage: '/og-image.png',
+      icons: [{ url: '/favicon.ico' }],
+      openGraph: {
+        images: [{ url: '/og-image.png' }],
+      },
     },
   },
   collections: [
