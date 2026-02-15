@@ -392,7 +392,7 @@ export default function BookingTrackerPage() {
             <div
               className="absolute top-8 left-0 h-1 gradient-pink rounded-full mx-8 transition-all duration-1000 ease-out"
               style={{
-                width: `calc(${(currentIndex / (statusOrder.length - 1)) * 100}% - 4rem)`,
+                width: `calc(${statusOrder.length > 1 ? (currentIndex / (statusOrder.length - 1)) * 100 : 0}% - 4rem)`,
               }}
             />
 

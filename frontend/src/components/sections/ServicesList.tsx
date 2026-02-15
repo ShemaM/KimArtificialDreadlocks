@@ -301,7 +301,7 @@ export default function ServicesList() {
             <p className="text-charcoal-light text-lg mb-4">
               No services found matching your criteria.
             </p>
-            <p className="text-sm text-text-muted">
+            <p className="text-sm text-charcoal-light">
               Try adjusting your search or filter options.
             </p>
           </div>
