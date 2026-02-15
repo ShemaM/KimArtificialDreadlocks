@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Metadata } from "next";
 import Image from "next/image";
 import { X } from "lucide-react";
 import CTASection from "@/components/sections/CTASection";

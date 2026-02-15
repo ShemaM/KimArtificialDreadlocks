@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Calendar, Phone } from "lucide-react";
+import { Calendar, Phone } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 export default function CTASection() {
