@@ -1,7 +1,18 @@
 import { Resend } from 'resend';
 
-// Initialize Resend client
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend client lazily to avoid build-time errors
+let resendClient: Resend | null = null;
+
+function getResendClient(): Resend {
+  if (!resendClient) {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      throw new Error('RESEND_API_KEY environment variable is not set');
+    }
+    resendClient = new Resend(apiKey);
+  }
+  return resendClient;
+}
 
 export interface BookingEmailData {
   customerName: string;
@@ -19,7 +30,7 @@ export async function sendAdminNotificationEmail(data: BookingEmailData): Promis
   const adminEmail = process.env.ADMIN_EMAIL || 'shemamanase992@gmail.com';
 
   try {
-    await resend.emails.send({
+    await getResendClient().emails.send({
       from: 'Kim\'s Spa <noreply@kimsspa.com>',
       to: adminEmail,
       subject: `🎉 New Booking Request from ${data.customerName}`,
@@ -92,7 +103,7 @@ export async function sendAdminNotificationEmail(data: BookingEmailData): Promis
  */
 export async function sendCustomerConfirmationEmail(data: BookingEmailData): Promise<boolean> {
   try {
-    await resend.emails.send({
+    await getResendClient().emails.send({
       from: 'Kim\'s Spa <noreply@kimsspa.com>',
       to: data.email,
       subject: `✨ Booking Confirmed - Kim's Dreadlocks & Nails Spa`,

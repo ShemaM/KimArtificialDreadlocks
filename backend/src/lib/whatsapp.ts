@@ -1,9 +1,19 @@
 import twilio from 'twilio';
 
-// Initialize Twilio client
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = twilio(accountSid, authToken);
+// Initialize Twilio client lazily to avoid build-time errors
+let twilioClient: twilio.Twilio | null = null;
+
+function getTwilioClient(): twilio.Twilio {
+  if (!twilioClient) {
+    const accountSid = process.env.TWILIO_ACCOUNT_SID;
+    const authToken = process.env.TWILIO_AUTH_TOKEN;
+    if (!accountSid || !authToken) {
+      throw new Error('TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN environment variables must be set');
+    }
+    twilioClient = twilio(accountSid, authToken);
+  }
+  return twilioClient;
+}
 
 // Twilio Sandbox WhatsApp number
 const TWILIO_WHATSAPP_NUMBER = 'whatsapp:+14155238886';
@@ -56,7 +66,7 @@ export async function sendAdminWhatsAppAlert(data: WhatsAppMessageData): Promise
       `📱 *Phone:* ${data.customerPhone}\n\n` +
       `Please check the admin panel to accept or decline this booking.`;
 
-    await client.messages.create({
+    await getTwilioClient().messages.create({
       body: message,
       from: TWILIO_WHATSAPP_NUMBER,
       to: ADMIN_WHATSAPP_NUMBER,
@@ -94,7 +104,7 @@ export async function sendCustomerWhatsAppConfirmation(data: WhatsAppMessageData
       `📞 Contact: +254 716 867 526\n\n` +
       `See you soon! 💖`;
 
-    await client.messages.create({
+    await getTwilioClient().messages.create({
       body: message,
       from: TWILIO_WHATSAPP_NUMBER,
       to: customerNumber,
