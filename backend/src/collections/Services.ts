@@ -97,6 +97,16 @@ export const Services: CollectionConfig = {
         description: 'Show this service on the homepage',
       },
     },
+    {
+      name: 'isAvailable',
+      type: 'checkbox',
+      label: 'Available',
+      defaultValue: true,
+      admin: {
+        position: 'sidebar',
+        description: 'Only available services will be displayed on the frontend',
+      },
+    },
   ],
 };
 

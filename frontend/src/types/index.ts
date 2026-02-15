@@ -13,6 +13,8 @@ export interface Service {
   additionalImages?: string[];
   subServices?: SubService[];
   category: "Hair" | "Nails" | "Other";
+  featured?: boolean;
+  isAvailable?: boolean;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -27,7 +29,7 @@ export interface GalleryImage {
 }
 
 // Booking Types
-export type BookingStatus = "Pending" | "Accepted" | "Held" | "Declined";
+export type BookingStatus = "Pending" | "Accepted" | "In Progress" | "Served" | "Declined";
 
 export interface Booking {
   id: string;
@@ -39,6 +41,18 @@ export interface Booking {
   bookingDate: string;
   status: BookingStatus;
   notes?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+// Review Types
+export interface Review {
+  id: string;
+  booking: string | Booking;
+  customerName: string;
+  rating: number;
+  comment: string;
+  isApproved: boolean;
   createdAt?: string;
   updatedAt?: string;
 }

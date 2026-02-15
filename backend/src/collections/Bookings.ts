@@ -61,7 +61,8 @@ export const Bookings: CollectionConfig = {
       options: [
         { label: 'Pending', value: 'Pending' },
         { label: 'Accepted', value: 'Accepted' },
-        { label: 'Held', value: 'Held' },
+        { label: 'In Progress', value: 'In Progress' },
+        { label: 'Served', value: 'Served' },
         { label: 'Declined', value: 'Declined' },
       ],
       defaultValue: 'Pending',
