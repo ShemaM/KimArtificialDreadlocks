@@ -4,6 +4,7 @@ node_modules/
 # Build output
 dist/
 build/
+.next/
 
 # Environment variables
 .env
@@ -37,6 +38,7 @@ media/
 
 # TypeScript
 *.tsbuildinfo
+next-env.d.ts
 
 # Test
 coverage/
