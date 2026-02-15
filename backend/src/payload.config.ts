@@ -17,16 +17,16 @@ const dirname = path.dirname(filename);
 // Validate required environment variables
 if (!process.env.DATABASE_URI) {
   console.error(`
-╔════════════════════════════════════════════════════════════════════════════╗
-║  ERROR: DATABASE_URI environment variable is not set!                      ║
-╠════════════════════════════════════════════════════════════════════════════╣
-║  To fix this:                                                              ║
-║  1. Copy .env.example to .env:  cp .env.example .env                       ║
-║  2. Edit .env and set your Supabase PostgreSQL connection string:          ║
-║     DATABASE_URI=postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres
-║                                                                            ║
-║  See README.md for complete setup instructions.                            ║
-╚════════════════════════════════════════════════════════════════════════════╝
+╔════════════════════════════════════════════════════════════════════════════════════════╗
+║  ERROR: DATABASE_URI environment variable is not set!                                  ║
+╠════════════════════════════════════════════════════════════════════════════════════════╣
+║  To fix this:                                                                          ║
+║  1. Copy .env.example to .env:  cp .env.example .env                                   ║
+║  2. Edit .env and set your Supabase PostgreSQL connection string:                      ║
+║     DATABASE_URI=postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres   ║
+║                                                                                        ║
+║  See README.md for complete setup instructions.                                        ║
+╚════════════════════════════════════════════════════════════════════════════════════════╝
 `);
   throw new Error('DATABASE_URI environment variable is required. Please configure your .env file.');
 }
