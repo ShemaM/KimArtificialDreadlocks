@@ -82,7 +82,7 @@ async function sendAdminEmail(
   formattedDate: string
 ): Promise<boolean> {
   if (!resend) {
-    console.warn("Resend client not initialized - RESEND_API_KEY not set");
+    console.warn("Email notification skipped - RESEND_API_KEY not set");
     return false;
   }
   try {
@@ -121,7 +121,7 @@ async function sendAdminWhatsApp(
   formattedDate: string
 ): Promise<boolean> {
   if (!twilioClient) {
-    console.warn("Twilio client not initialized - credentials not set");
+    console.warn("WhatsApp admin notification skipped - Twilio credentials not set");
     return false;
   }
   try {
@@ -149,7 +149,7 @@ async function sendCustomerWhatsApp(
   formattedDate: string
 ): Promise<boolean> {
   if (!twilioClient) {
-    console.warn("Twilio client not initialized - credentials not set");
+    console.warn("WhatsApp customer notification skipped - Twilio credentials not set");
     return false;
   }
   try {
