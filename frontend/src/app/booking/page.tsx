@@ -5,8 +5,8 @@ import { Calendar, Clock, User, Mail, Phone, FileText, CheckCircle2 } from "luci
 import { toast } from "sonner";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { BookingFormSkeleton } from "@/components/ui/Skeleton";
 import { formatBookingDate } from "@/lib/utils";
+import { createBooking } from "@/actions/booking";
 import type { BookingFormData } from "@/types";
 
 // Services for the dropdown - will be replaced with data from Payload CMS
@@ -45,15 +45,20 @@ export default function BookingPage() {
     setIsSubmitting(true);
 
     try {
-      // Simulate API call - will be replaced with Server Action
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // Call the server action to create the booking
+      const result = await createBooking(formData);
 
-      // Show success toast
-      toast.success("Booking submitted successfully!", {
-        description: `Your appointment for ${formatBookingDate(formData.bookingDate)} has been received.`,
-      });
-
-      setIsSubmitted(true);
+      if (result.success) {
+        // Show success toast
+        toast.success("Booking submitted successfully!", {
+          description: `Your appointment for ${formatBookingDate(formData.bookingDate)} has been received.`,
+        });
+        setIsSubmitted(true);
+      } else {
+        toast.error("Failed to submit booking", {
+          description: result.message,
+        });
+      }
     } catch {
       toast.error("Failed to submit booking", {
         description: "Please try again or contact us directly.",
