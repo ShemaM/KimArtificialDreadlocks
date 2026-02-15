@@ -18,7 +18,10 @@ const dirname = path.dirname(filename);
 const isBuildPhase = process.env.NEXT_PHASE === 'phase-production-build' || 
                      process.argv.includes('build');
 
-// Warn if DATABASE_URI is not set, but allow builds to proceed
+// Placeholder URI used only during build phase - never used for actual database connections
+const BUILD_PLACEHOLDER_URI = 'postgresql://placeholder:placeholder@localhost:5432/placeholder';
+
+// Validate DATABASE_URI at runtime (not during build)
 if (!process.env.DATABASE_URI && !isBuildPhase) {
   console.error(`
 ╔════════════════════════════════════════════════════════════════════════════════════════╗
@@ -32,11 +35,11 @@ if (!process.env.DATABASE_URI && !isBuildPhase) {
 ║  See README.md for complete setup instructions.                                        ║
 ╚════════════════════════════════════════════════════════════════════════════════════════╝
 `);
+  throw new Error('DATABASE_URI environment variable is required. Please configure your .env file.');
 }
 
-// Use a placeholder URI during build phase to allow Next.js to compile successfully
-// The actual database connection will only be attempted at runtime
-const databaseUri = process.env.DATABASE_URI || 'postgresql://placeholder:placeholder@localhost:5432/placeholder';
+// Use placeholder during build phase to allow Next.js compilation, actual URI at runtime
+const databaseUri = process.env.DATABASE_URI || BUILD_PLACEHOLDER_URI;
 
 export default buildConfig({
   admin: {
