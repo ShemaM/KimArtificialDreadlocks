@@ -3,6 +3,25 @@
 ## Overview
 This document summarizes all changes made to refactor the UI/UX and implement best practices for Kim's Artificial Dreadlocks & Nails Spa business operations.
 
+## 🔄 Latest Update: Unified Application Architecture (February 2026)
+
+**IMPORTANT:** The application has been unified into a single Next.js application. The previous separate `frontend/` and `backend/` directories have been merged into a single `src/` directory at the root level.
+
+### What Changed:
+- ✅ **Single Application**: Both customer-facing website and admin panel now run in one Next.js app
+- ✅ **Single Port**: Everything runs on port 3000 (customer site at `/`, admin at `/admin`)
+- ✅ **Unified Dependencies**: One `package.json` with all dependencies
+- ✅ **Simplified Deployment**: Build and deploy as one application
+- ✅ **Better DX**: Simplified development workflow with one dev server
+
+### Updated File Paths:
+All file references below use the old `frontend/` and `backend/` structure. Here's the mapping:
+- `frontend/src/*` → `src/*`
+- `backend/src/collections/*` → `src/collections/*`
+- `backend/src/hooks/*` → `src/hooks/*`
+- `backend/src/lib/email.ts` → `src/lib/email.ts`
+- `backend/src/lib/whatsapp.ts` → `src/lib/whatsapp.ts`
+
 ---
 
 ## ✅ Completed Tasks
@@ -204,58 +223,75 @@ This document summarizes all changes made to refactor the UI/UX and implement be
 
 ---
 
-## 📁 File Structure
+## 📁 File Structure (Updated - Unified Application)
 
-### Backend Files Modified/Created
+### Unified Application Files
 ```
-backend/src/
-├── collections/
-│   ├── Bookings.ts         # Updated: time field, status options
-│   ├── Services.ts         # Updated: categories, slug field
-│   └── Gallery.ts          # Updated: categories, caption field
-├── hooks/
-│   ├── bookingNotifications.ts  # Updated: status change handling
-│   └── bookingValidation.ts     # New: conflict checking
-└── lib/
-    ├── email.ts            # Updated: status change emails
-    └── whatsapp.ts         # Updated: status change WhatsApp
-```
-
-### Frontend Files Modified/Created
-```
-frontend/src/
+src/
 ├── app/
-│   ├── layout.tsx          # Updated: SEO metadata
-│   ├── page.tsx            # Updated: barbershop banner
-│   ├── booking/page.tsx    # Updated: time field, hours, constants
-│   ├── contact/page.tsx    # Updated: location, hours
-│   ├── gallery/page.tsx    # Updated: categories, captions
-│   ├── services/page.tsx   # Updated: SEO metadata
-│   └── tracker/[id]/page.tsx  # Updated: status names
+│   ├── (payload)/              # Payload CMS Admin (isolated routing)
+│   │   ├── admin/             # Admin panel at /admin
+│   │   └── api/               # Payload API routes
+│   ├── api/                   # Custom API routes
+│   │   ├── health/
+│   │   ├── reviews/
+│   │   └── testimonials/
+│   ├── layout.tsx             # Root layout with Navbar/Footer
+│   ├── page.tsx               # Homepage
+│   ├── booking/page.tsx       # Booking form
+│   ├── contact/page.tsx       # Contact page
+│   ├── gallery/page.tsx       # Gallery page
+│   ├── services/              # Services pages
+│   └── tracker/               # Booking tracker
+├── collections/               # Payload Collections
+│   ├── Bookings.ts
+│   ├── Services.ts
+│   ├── Gallery.ts
+│   ├── Media.ts
+│   ├── Reviews.ts
+│   └── Users.ts
 ├── components/
 │   ├── layout/
-│   │   ├── Navbar.tsx      # Updated: WhatsApp icon
-│   │   └── Footer.tsx      # Updated: location, hours
+│   │   ├── Navbar.tsx
+│   │   └── Footer.tsx
 │   ├── sections/
-│   │   ├── HeroSection.tsx       # Updated: subheading
-│   │   ├── BarbershopBanner.tsx  # New: barbershop banner
-│   │   └── GallerySection.tsx    # Updated: categories
+│   │   ├── HeroSection.tsx
+│   │   ├── BarbershopBanner.tsx
+│   │   ├── ServicesSection.tsx
+│   │   ├── GallerySection.tsx
+│   │   ├── TestimonialsSection.tsx
+│   │   └── CTASection.tsx
 │   └── ui/
-│       ├── Button.tsx              # Updated: mobile optimization
-│       └── FloatingWhatsAppWidget.tsx  # New: floating widget
+│       ├── Button.tsx
+│       ├── Card.tsx
+│       ├── FloatingWhatsAppWidget.tsx
+│       └── GlobalLoader.tsx
+├── hooks/
+│   ├── bookingNotifications.ts
+│   └── bookingValidation.ts
 ├── lib/
-│   └── constants.ts        # New: business constants
+│   ├── email.ts
+│   ├── whatsapp.ts
+│   ├── supabase.ts
+│   ├── constants.ts
+│   └── utils.ts
 ├── types/
-│   └── index.ts           # Updated: categories, statuses
-└── actions/
-    └── booking.ts         # Updated: time validation
+│   └── index.ts
+├── actions/
+│   └── booking.ts
+├── payload.config.ts          # Payload CMS configuration
+└── payload-types.ts           # Auto-generated types
 ```
 
-### Documentation
+### Root Configuration Files
 ```
 /
-├── BEST_PRACTICES.md      # New: comprehensive documentation
-└── IMPLEMENTATION_SUMMARY.md  # This file
+├── package.json               # Unified dependencies
+├── next.config.ts             # Next.js + Payload config
+├── tsconfig.json              # TypeScript configuration
+├── .env.example               # Environment template
+├── eslint.config.mjs          # ESLint configuration
+└── postcss.config.mjs         # PostCSS configuration
 ```
 
 ---
@@ -263,23 +299,25 @@ frontend/src/
 ## 🔧 Manual Steps Required
 
 ### 1. Populate Services in Payload Admin
-Navigate to the Payload Admin panel and create services matching the exact structure:
+Navigate to the Payload Admin panel at `/admin` and create services matching the exact structure:
 - Use the new categories: `dreadlocks`, `styling`, `nails`
 - Add SEO-friendly slugs
 - Upload professional images for each service
 
 ### 2. Environment Variables
-Ensure these are set in production:
+Ensure these are set in your `.env` file (both development and production):
 ```env
-# Backend (.env)
+# Required
 DATABASE_URI=postgresql://...
 PAYLOAD_SECRET=...
+
+# Optional but recommended
 RESEND_API_KEY=...
 TWILIO_ACCOUNT_SID=...
 TWILIO_AUTH_TOKEN=...
 ADMIN_EMAIL=shemamanase992@gmail.com
 
-# Frontend (.env.local)
+# Production
 NEXT_PUBLIC_SITE_URL=https://yourdomain.com
 NEXT_PUBLIC_GOOGLE_VERIFICATION=... (optional)
 ```
@@ -290,6 +328,18 @@ Replace placeholder images with actual photos:
 - Service images
 - Gallery images
 - All images should be optimized (WebP/AVIF format preferred)
+
+### 4. Running the Application
+```bash
+# Development
+npm run dev
+# Access at http://localhost:3000 (customer site)
+# Admin panel at http://localhost:3000/admin
+
+# Production
+npm run build
+npm start
+```
 
 ---
 
