@@ -5,9 +5,30 @@ import ServicesList from "@/components/sections/ServicesList";
 import GlobalLoader from "@/components/ui/GlobalLoader";
 
 export const metadata: Metadata = {
-  title: "Our Services | Kim's Dreadlocks & Nails Spa",
+  title: "Professional Beauty Services in Kitengela | Kim's Dreadlocks & Nails Spa",
   description:
-    "Explore our comprehensive range of beauty services including artificial dreadlocks, braids, nail art, and spa treatments in Kitengela.",
+    "Expert beauty services in Kitengela: Congolese Artificial Dreadlocks, Knotless Braids, Professional Nails, Hair Styling. Located at Rontech Apartments, Deliverance Road, Kitengela. Book today!",
+  keywords: [
+    "artificial dreadlocks Kitengela",
+    "Congolese dreadlocks Kitengela",
+    "knotless braids Kitengela",
+    "nail salon Kitengela",
+    "beauty salon Kitengela",
+    "hair styling Kitengela",
+    "Rontech Apartments salon",
+    "Deliverance Road beauty",
+  ],
+  openGraph: {
+    title: "Professional Beauty Services in Kitengela | Kim's Dreadlocks & Nails Spa",
+    description:
+      "Expert Congolese Artificial Dreadlocks, Braids & Nails in Kitengela. Located at Rontech Apartments, Deliverance Road.",
+    type: "website",
+    locale: "en_KE",
+    siteName: "Kim's Dreadlocks & Nails Spa",
+  },
+  alternates: {
+    canonical: "/services",
+  },
 };
 
 export default function ServicesPage() {

@@ -50,7 +50,7 @@ export const Bookings: CollectionConfig = {
       label: 'Booking Date',
       admin: {
         date: {
-          pickerAppearance: 'dayAndTime',
+          pickerAppearance: 'dayOnly',
           displayFormat: 'EEEE, d MMMM yyyy',
         },
       },
