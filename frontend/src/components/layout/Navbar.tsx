@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -62,15 +62,27 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Phone Number - Desktop */}
-          <div className="hidden lg:flex items-center gap-2 text-charcoal">
-            <Phone className="w-4 h-4 text-pink" />
+          {/* Contact Icons - Desktop */}
+          <div className="hidden lg:flex items-center gap-4">
             <a
-              href="tel:+254716867526"
-              className="text-sm font-medium hover:text-pink transition-colors"
+              href="https://wa.me/254716867526"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-full hover:bg-green-50 transition-colors"
+              aria-label="WhatsApp"
+              title="Chat on WhatsApp"
             >
-              +254 716 867 526
+              <MessageCircle className="w-5 h-5 text-green-500" />
             </a>
+            <div className="flex items-center gap-2 text-charcoal">
+              <Phone className="w-4 h-4 text-pink" />
+              <a
+                href="tel:+254716867526"
+                className="text-sm font-medium hover:text-pink transition-colors"
+              >
+                +254 716 867 526
+              </a>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}

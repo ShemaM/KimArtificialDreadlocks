@@ -12,7 +12,8 @@ export interface Service {
   image: string;
   additionalImages?: string[];
   subServices?: SubService[];
-  category: "Hair" | "Nails" | "Other";
+  category: "dreadlocks" | "styling" | "nails";
+  slug?: string;
   featured?: boolean;
   isAvailable?: boolean;
   createdAt?: string;
@@ -23,13 +24,14 @@ export interface Service {
 export interface GalleryImage {
   id: string;
   image: string;
-  category: "Dreadlocks" | "Braids" | "Nails" | "Other Styles";
+  category: "Dreadlocks" | "Styling" | "Nails";
+  caption?: string;
   alt?: string;
   createdAt?: string;
 }
 
 // Booking Types
-export type BookingStatus = "Pending" | "Accepted" | "In Progress" | "Served" | "Declined";
+export type BookingStatus = "Pending" | "Accepted" | "Held" | "Declined";
 
 export interface Booking {
   id: string;
@@ -39,6 +41,7 @@ export interface Booking {
   serviceId: string;
   service?: Service;
   bookingDate: string;
+  bookingTime: string;
   status: BookingStatus;
   notes?: string;
   createdAt?: string;
@@ -64,6 +67,7 @@ export interface BookingFormData {
   phone: string;
   serviceId: string;
   bookingDate: string;
+  bookingTime: string;
   notes?: string;
 }
 

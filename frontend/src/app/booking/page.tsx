@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { formatBookingDate } from "@/lib/utils";
+import { OPERATING_HOURS } from "@/lib/constants";
 import { createBooking } from "@/actions/booking";
 import type { BookingFormData } from "@/types";
 
@@ -30,6 +31,7 @@ export default function BookingPage() {
     phone: "",
     serviceId: "",
     bookingDate: "",
+    bookingTime: "",
     notes: "",
   });
 
@@ -244,7 +246,7 @@ export default function BookingPage() {
                     </div>
                   </div>
 
-                  {/* Date Row */}
+                  {/* Date & Time Row */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label
@@ -267,14 +269,38 @@ export default function BookingPage() {
                         />
                       </div>
                     </div>
-                    <div className="flex items-end">
-                      <div className="bg-cream rounded-xl p-4 w-full">
-                        <div className="flex items-center gap-2 text-charcoal-light">
-                          <Clock className="w-5 h-5 text-pink" />
-                          <span className="text-sm">
-                            Operating Hours: Mon-Sat 8AM-7PM, Sun 10AM-5PM
-                          </span>
-                        </div>
+                    <div>
+                      <label
+                        htmlFor="bookingTime"
+                        className="block text-sm font-medium text-charcoal mb-2"
+                      >
+                        Preferred Time *
+                      </label>
+                      <div className="relative">
+                        <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-charcoal-light" />
+                        <input
+                          type="time"
+                          id="bookingTime"
+                          name="bookingTime"
+                          value={formData.bookingTime}
+                          onChange={handleChange}
+                          required
+                          min={OPERATING_HOURS.weekdays.start}
+                          max={OPERATING_HOURS.weekdays.end}
+                          className="w-full pl-12 pr-4 py-3 rounded-xl border border-cream-dark bg-cream/50 focus:bg-white focus:border-pink focus:ring-2 focus:ring-pink/20 outline-none transition-all cursor-pointer"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Operating Hours Info */}
+                  <div className="bg-cream rounded-xl p-4">
+                    <div className="flex items-start gap-2 text-charcoal-light">
+                      <Clock className="w-5 h-5 text-pink flex-shrink-0 mt-0.5" />
+                      <div className="text-sm">
+                        <p className="font-medium text-charcoal mb-1">Operating Hours:</p>
+                        <p>{OPERATING_HOURS.weekdays.days}: {OPERATING_HOURS.weekdays.display}</p>
+                        <p className="text-xs mt-1">{OPERATING_HOURS.sunday.special}</p>
                       </div>
                     </div>
                   </div>
@@ -299,14 +325,28 @@ export default function BookingPage() {
                   </div>
 
                   {/* Submit Button */}
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="w-full"
-                    isLoading={isSubmitting}
-                  >
-                    {isSubmitting ? "Submitting..." : "Book Appointment"}
-                  </Button>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Button
+                      type="submit"
+                      size="lg"
+                      className="w-full"
+                      isLoading={isSubmitting}
+                    >
+                      {isSubmitting ? "Submitting..." : "Book Appointment"}
+                    </Button>
+                    
+                    <a href="tel:+254716867526" className="w-full">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="lg"
+                        className="w-full gap-2"
+                      >
+                        <Phone className="w-5 h-5" />
+                        Urgent? Call Us Directly
+                      </Button>
+                    </a>
+                  </div>
 
                   <p className="text-xs text-center text-charcoal-light">
                     By submitting this form, you agree to receive booking confirmation via email and WhatsApp.

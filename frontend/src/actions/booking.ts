@@ -179,7 +179,8 @@ export async function createBooking(
       !formData.email ||
       !formData.phone ||
       !formData.serviceId ||
-      !formData.bookingDate
+      !formData.bookingDate ||
+      !formData.bookingTime
     ) {
       return {
         success: false,

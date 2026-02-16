@@ -43,7 +43,7 @@ const galleryImages = [
   },
 ];
 
-const categories = ["Dreadlocks", "Braids", "Nails", "Other Styles"];
+const categories = ["Dreadlocks", "Styling", "Nails"];
 
 export default function GallerySection() {
   return (

@@ -127,7 +127,7 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-pink flex-shrink-0 mt-0.5" />
                 <span className="text-sm text-text-muted">
-                  Kitengela Town, Kajiado County, Kenya
+                  Rontech Apartments, Deliverance Road, Kitengela. (Located directly in front of Flavors Dishes and Fast Food restaurant, opposite Mission Care Hospital)
                 </span>
               </li>
               <li className="flex items-center gap-3">
@@ -151,8 +151,8 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <Clock className="w-5 h-5 text-pink flex-shrink-0 mt-0.5" />
                 <div className="text-sm text-text-muted">
-                  <p>Mon - Sat: 8:00 AM - 7:00 PM</p>
-                  <p>Sunday: 10:00 AM - 5:00 PM</p>
+                  <p>Mon - Sat: 8:00 AM - 8:00 PM</p>
+                  <p>Sundays: Special Requests & Emergencies Only (Call to confirm)</p>
                 </div>
               </li>
             </ul>
