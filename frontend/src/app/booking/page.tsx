@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { formatBookingDate } from "@/lib/utils";
+import { OPERATING_HOURS } from "@/lib/constants";
 import { createBooking } from "@/actions/booking";
 import type { BookingFormData } from "@/types";
 
@@ -284,8 +285,8 @@ export default function BookingPage() {
                           value={formData.bookingTime}
                           onChange={handleChange}
                           required
-                          min="08:00"
-                          max="20:00"
+                          min={OPERATING_HOURS.weekdays.start}
+                          max={OPERATING_HOURS.weekdays.end}
                           className="w-full pl-12 pr-4 py-3 rounded-xl border border-cream-dark bg-cream/50 focus:bg-white focus:border-pink focus:ring-2 focus:ring-pink/20 outline-none transition-all cursor-pointer"
                         />
                       </div>
@@ -298,8 +299,8 @@ export default function BookingPage() {
                       <Clock className="w-5 h-5 text-pink flex-shrink-0 mt-0.5" />
                       <div className="text-sm">
                         <p className="font-medium text-charcoal mb-1">Operating Hours:</p>
-                        <p>Mon-Sat: 8:00 AM – 8:00 PM</p>
-                        <p className="text-xs mt-1">Sundays: Special Requests & Emergencies Only (Please call to confirm)</p>
+                        <p>{OPERATING_HOURS.weekdays.days}: {OPERATING_HOURS.weekdays.display}</p>
+                        <p className="text-xs mt-1">{OPERATING_HOURS.sunday.special}</p>
                       </div>
                     </div>
                   </div>
