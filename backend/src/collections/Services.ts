@@ -77,15 +77,25 @@ export const Services: CollectionConfig = {
       ],
     },
     {
+      name: 'slug',
+      type: 'text',
+      required: true,
+      label: 'URL Slug',
+      admin: {
+        description: 'SEO-friendly URL slug (e.g., "dreadlocks", "styling", "nails")',
+      },
+      unique: true,
+    },
+    {
       name: 'category',
       type: 'select',
       required: true,
       options: [
-        { label: 'Hair', value: 'Hair' },
-        { label: 'Nails', value: 'Nails' },
-        { label: 'Other', value: 'Other' },
+        { label: 'Dreadlocks', value: 'dreadlocks' },
+        { label: 'Braids & Styling', value: 'styling' },
+        { label: 'Nails', value: 'nails' },
       ],
-      defaultValue: 'Hair',
+      defaultValue: 'dreadlocks',
       label: 'Category',
     },
     {

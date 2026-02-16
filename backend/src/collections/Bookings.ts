@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload';
 import { sendBookingNotifications } from '../hooks/bookingNotifications';
+import { validateBookingConflict } from '../hooks/bookingValidation';
 
 export const Bookings: CollectionConfig = {
   slug: 'bookings',
@@ -49,9 +50,18 @@ export const Bookings: CollectionConfig = {
       label: 'Booking Date',
       admin: {
         date: {
-          pickerAppearance: 'dayOnly',
+          pickerAppearance: 'dayAndTime',
           displayFormat: 'EEEE, d MMMM yyyy',
         },
+      },
+    },
+    {
+      name: 'bookingTime',
+      type: 'text',
+      required: true,
+      label: 'Booking Time',
+      admin: {
+        description: 'Time of booking (e.g., "2:00 PM")',
       },
     },
     {
@@ -61,8 +71,7 @@ export const Bookings: CollectionConfig = {
       options: [
         { label: 'Pending', value: 'Pending' },
         { label: 'Accepted', value: 'Accepted' },
-        { label: 'In Progress', value: 'In Progress' },
-        { label: 'Served', value: 'Served' },
+        { label: 'Held', value: 'Held' },
         { label: 'Declined', value: 'Declined' },
       ],
       defaultValue: 'Pending',
@@ -78,6 +87,7 @@ export const Bookings: CollectionConfig = {
     },
   ],
   hooks: {
+    beforeChange: [validateBookingConflict],
     afterChange: [sendBookingNotifications],
   },
 };

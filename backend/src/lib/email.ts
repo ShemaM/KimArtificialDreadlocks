@@ -99,6 +99,89 @@ export async function sendAdminNotificationEmail(data: BookingEmailData): Promis
 }
 
 /**
+ * Send booking status change email to customer
+ */
+export async function sendStatusChangeEmail(
+  customerEmail: string,
+  customerName: string,
+  serviceName: string,
+  bookingDate: string,
+  status: string
+): Promise<boolean> {
+  try {
+    let statusColor = '#FFD700';
+    let statusEmoji = '⏳';
+    let statusMessage = '';
+
+    if (status === 'Accepted') {
+      statusColor = '#00A550';
+      statusEmoji = '✅';
+      statusMessage = 'Great news! Your booking has been <strong>confirmed</strong>. We look forward to seeing you!';
+    } else if (status === 'Held') {
+      statusColor = '#FFD700';
+      statusEmoji = '⏸️';
+      statusMessage = 'Your booking is currently on <strong>hold</strong>. We will contact you soon with more details.';
+    } else if (status === 'Declined') {
+      statusColor = '#E31C3D';
+      statusEmoji = '❌';
+      statusMessage = 'Unfortunately, we cannot accommodate your booking at this time. Please contact us to reschedule or discuss alternatives.';
+    }
+
+    await getResendClient().emails.send({
+      from: 'Kim\'s Spa <noreply@kimsspa.com>',
+      to: customerEmail,
+      subject: `${statusEmoji} Booking Status Update - Kim's Spa`,
+      html: `
+        <div style="font-family: 'Poppins', Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #FFF8F0; padding: 20px;">
+          <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="font-family: 'Playfair Display', Georgia, serif; color: #FF69B4; margin: 0;">
+              Kim's Dreadlocks & Nails Spa
+            </h1>
+            <div style="height: 4px; background: linear-gradient(90deg, #E31C3D 33%, #FFD700 33%, #FFD700 66%, #00A550 66%); margin-top: 10px;"></div>
+          </div>
+          
+          <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+            <div style="text-align: center; margin-bottom: 20px;">
+              <div style="width: 80px; height: 80px; background: ${statusColor}; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 40px;">
+                ${statusEmoji}
+              </div>
+            </div>
+            
+            <h2 style="color: #2D3436; text-align: center; margin-top: 0;">Booking Status Update</h2>
+            <p style="color: #636E72; text-align: center;">${statusMessage}</p>
+            
+            <div style="background: #FFF8F0; border-radius: 12px; padding: 20px; margin: 20px 0;">
+              <h3 style="color: #FF69B4; margin-top: 0; font-size: 16px;">Booking Details</h3>
+              <p style="margin: 8px 0; color: #2D3436;"><strong>Customer:</strong> ${customerName}</p>
+              <p style="margin: 8px 0; color: #2D3436;"><strong>Service:</strong> ${serviceName}</p>
+              <p style="margin: 8px 0; color: #2D3436;"><strong>Date:</strong> ${bookingDate}</p>
+              <p style="margin: 8px 0; color: #2D3436;"><strong>Status:</strong> <span style="color: ${statusColor}; font-weight: 600;">${status}</span></p>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, rgba(255, 182, 193, 0.3) 0%, rgba(255, 105, 180, 0.2) 100%); border-radius: 12px; padding: 20px; margin: 20px 0;">
+              <h3 style="color: #2D3436; margin-top: 0; font-size: 16px;">Need to Contact Us?</h3>
+              <p style="margin: 8px 0; color: #636E72;">📞 Call: +254 716 867 526</p>
+              <p style="margin: 8px 0; color: #636E72;">💬 WhatsApp: +254 716 867 526</p>
+              <p style="margin: 8px 0; color: #636E72;">📍 Rontech Apartments, Deliverance Road, Kitengela</p>
+            </div>
+          </div>
+          
+          <p style="text-align: center; color: #B2BEC3; font-size: 12px; margin-top: 20px;">
+            © ${new Date().getFullYear()} Kim's Dreadlocks & Nails Spa. All rights reserved.
+          </p>
+        </div>
+      `,
+    });
+
+    console.log(`Status change email sent to ${customerEmail} - Status: ${status}`);
+    return true;
+  } catch (error) {
+    console.error('Failed to send status change email:', error);
+    return false;
+  }
+}
+
+/**
  * Send booking confirmation email to customer
  */
 export async function sendCustomerConfirmationEmail(data: BookingEmailData): Promise<boolean> {
