@@ -193,7 +193,25 @@ export async function createBooking(
     const serviceName = service?.title || "Unknown Service";
     const formattedDate = formatBookingDate(formData.bookingDate);
 
-    // Generate a simple booking ID (in production, this would come from the database)
+    // TODO: Save booking to Payload CMS database
+    // Currently bookings are only sent via notifications but not persisted.
+    // To fix: Import and use Payload SDK to create booking record:
+    // const payload = await getPayload({ config: configPromise })
+    // await payload.create({
+    //   collection: 'bookings',
+    //   data: {
+    //     customerName: formData.customerName,
+    //     email: formData.email,
+    //     phone: formData.phone,
+    //     service: formData.serviceId,
+    //     bookingDate: formData.bookingDate,
+    //     bookingTime: formData.bookingTime,
+    //     notes: formData.notes || '',
+    //     status: 'pending',
+    //   },
+    // })
+    
+    // Generate a simple booking ID (temporary - should come from database after above fix)
     const bookingId = `BK-${Date.now()}-${Math.random().toString(36).substring(7)}`;
 
     // Send all notifications asynchronously

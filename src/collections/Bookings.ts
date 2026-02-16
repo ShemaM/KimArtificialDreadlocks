@@ -63,6 +63,14 @@ export const Bookings: CollectionConfig = {
       admin: {
         description: 'Time of booking (e.g., "2:00 PM")',
       },
+      validate: (value: string) => {
+        // Validate time format: H:MM AM/PM or HH:MM AM/PM
+        const timeRegex = /^(0?[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$/i;
+        if (!timeRegex.test(value)) {
+          return 'Please enter time in format "H:MM AM" or "H:MM PM" (e.g., "2:00 PM")';
+        }
+        return true;
+      },
     },
     {
       name: 'status',

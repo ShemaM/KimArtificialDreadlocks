@@ -23,11 +23,11 @@ export const Gallery: CollectionConfig = {
       type: 'select',
       required: true,
       options: [
-        { label: 'Dreadlocks', value: 'Dreadlocks' },
-        { label: 'Styling', value: 'Styling' },
-        { label: 'Nails', value: 'Nails' },
+        { label: 'Dreadlocks', value: 'dreadlocks' },
+        { label: 'Styling', value: 'styling' },
+        { label: 'Nails', value: 'nails' },
       ],
-      defaultValue: 'Dreadlocks',
+      defaultValue: 'dreadlocks',
       label: 'Category',
     },
     {

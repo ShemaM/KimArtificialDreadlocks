@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const PAYLOAD_API_URL = process.env.PAYLOAD_API_URL || "http://localhost:3001/api";
+const PAYLOAD_API_URL = process.env.PAYLOAD_API_URL || "http://localhost:3000/api";
 
 interface ReviewPayload {
   bookingId: string;
