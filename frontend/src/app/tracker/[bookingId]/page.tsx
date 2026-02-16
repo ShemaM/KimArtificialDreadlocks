@@ -32,17 +32,12 @@ const statusConfig: Record<
   Accepted: {
     label: "Booking Accepted",
     icon: Check,
-    color: "text-blue-500",
-  },
-  "In Progress": {
-    label: "Service In Progress",
-    icon: Scissors,
-    color: "text-pink",
-  },
-  Served: {
-    label: "Service Completed",
-    icon: Sparkles,
     color: "text-green-500",
+  },
+  Held: {
+    label: "On Hold",
+    icon: Scissors,
+    color: "text-blue-500",
   },
   Declined: {
     label: "Booking Declined",
@@ -54,8 +49,7 @@ const statusConfig: Record<
 const statusOrder: BookingStatus[] = [
   "Pending",
   "Accepted",
-  "In Progress",
-  "Served",
+  "Held",
 ];
 
 export default function BookingTrackerPage() {
@@ -128,7 +122,7 @@ export default function BookingTrackerPage() {
           );
 
           // Show review form when status changes to Served
-          if (newStatus === "Served") {
+          if (newStatus === "Accepted") {
             setTimeout(() => setShowReviewForm(true), 1000);
           }
         }
@@ -446,10 +440,8 @@ export default function BookingTrackerPage() {
                 "Your booking is being reviewed. We'll confirm shortly!"}
               {booking.status === "Accepted" &&
                 "Great news! Your booking is confirmed. See you soon!"}
-              {booking.status === "In Progress" &&
-                "Your service is underway. Sit back and relax!"}
-              {booking.status === "Served" &&
-                "Your service is complete. We hope you loved it!"}
+              {booking.status === "Held" &&
+                "Your booking is on hold. We'll contact you with updates!"}
             </p>
           </div>
 
