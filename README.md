@@ -1,23 +1,21 @@
 # Kim's Artificial Dreadlocks & Nails Spa
 
-A full-stack, production-ready web application and management platform for Kim's Artificial Dreadlocks & Nails Spa, a premier beauty salon located in Kitengela, Kenya. This project features a customer-facing website with a dynamic service catalog, a categorized photo gallery, and an interactive booking engine, alongside a powerful administrative dashboard for managing appointments and content.
+A unified full-stack, production-ready web application and management platform for Kim's Artificial Dreadlocks & Nails Spa, a premier beauty salon located in Kitengela, Kenya. This project features a customer-facing website with a dynamic service catalog, a categorized photo gallery, and an interactive booking engine, alongside a powerful administrative dashboard for managing appointments and content.
 
 **Author:** Shema
 
 ## 🚀 Tech Stack
 
-### Frontend
-- **Framework:** Next.js 15+ (App Router)
+### Frontend & Backend (Unified)
+- **Framework:** Next.js 15.4.11 (App Router)
+- **CMS:** Payload CMS v3.0+ (integrated within Next.js)
+- **Database:** Supabase (PostgreSQL) via `@payloadcms/db-postgres`
 - **Styling:** Tailwind CSS 4
 - **Language:** TypeScript (Strict mode)
+- **Rich Text:** Lexical Editor
 - **Fonts:** Playfair Display (headings), Poppins (body)
 - **Icons:** Lucide React
 - **Notifications:** Sonner (Toast notifications)
-
-### Backend / CMS
-- **CMS:** Payload CMS v3.0+
-- **Database:** Supabase (PostgreSQL) via `@payloadcms/db-postgres`
-- **Rich Text:** Lexical Editor
 
 ### Integrations
 - **Email:** Resend
@@ -49,37 +47,49 @@ When a booking is submitted:
 
 ```
 KimArtificialDreadlocks/
-├── frontend/                  # Next.js Frontend Application
-│   ├── src/
-│   │   ├── app/              # App Router pages
-│   │   │   ├── page.tsx      # Homepage
-│   │   │   ├── services/     # Services page
-│   │   │   ├── gallery/      # Gallery page
-│   │   │   ├── booking/      # Booking form page
-│   │   │   └── contact/      # Contact page
-│   │   ├── components/       # React components
-│   │   │   ├── layout/       # Navbar, Footer
-│   │   │   ├── sections/     # Page sections
-│   │   │   └── ui/           # Reusable UI components
-│   │   ├── actions/          # Server Actions
-│   │   ├── lib/              # Utility functions
-│   │   └── types/            # TypeScript interfaces
-│   └── public/               # Static assets
-│
-├── backend/                   # Payload CMS Backend
-│   ├── src/
-│   │   ├── collections/      # Database collections
-│   │   │   ├── Services.ts
-│   │   │   ├── Gallery.ts
-│   │   │   ├── Bookings.ts
-│   │   │   ├── Media.ts
-│   │   │   └── Users.ts
-│   │   ├── hooks/            # Payload hooks
-│   │   ├── lib/              # Email & WhatsApp services
-│   │   ├── payload.config.ts # Payload configuration
-│   │   └── server.ts         # Express server
-│   └── .env.example          # Environment template
-│
+├── src/
+│   ├── app/                    # Next.js App Router
+│   │   ├── (payload)/         # Payload CMS Admin Routes (isolated)
+│   │   │   ├── admin/         # Admin panel at /admin
+│   │   │   └── api/           # Payload API routes
+│   │   ├── api/               # Custom API routes
+│   │   │   ├── reviews/       # Reviews API
+│   │   │   ├── testimonials/  # Testimonials API
+│   │   │   └── health/        # Health check
+│   │   ├── page.tsx           # Homepage
+│   │   ├── services/          # Services pages
+│   │   ├── gallery/           # Gallery page
+│   │   ├── booking/           # Booking form page
+│   │   ├── contact/           # Contact page
+│   │   ├── tracker/           # Booking tracker
+│   │   ├── layout.tsx         # Root layout with Navbar/Footer
+│   │   └── globals.css        # Global styles
+│   ├── collections/           # Payload CMS Collections
+│   │   ├── Services.ts
+│   │   ├── Gallery.ts
+│   │   ├── Bookings.ts
+│   │   ├── Media.ts
+│   │   ├── Reviews.ts
+│   │   └── Users.ts
+│   ├── components/            # React components
+│   │   ├── layout/            # Navbar, Footer
+│   │   ├── sections/          # Page sections
+│   │   └── ui/                # Reusable UI components
+│   ├── actions/               # Server Actions
+│   ├── hooks/                 # Payload hooks
+│   ├── lib/                   # Utility functions
+│   │   ├── email.ts           # Email service
+│   │   ├── whatsapp.ts        # WhatsApp service
+│   │   ├── supabase.ts        # Supabase client
+│   │   └── constants.ts       # Business constants
+│   ├── types/                 # TypeScript interfaces
+│   ├── payload.config.ts      # Payload configuration
+│   └── payload-types.ts       # Auto-generated Payload types
+├── public/                    # Static assets
+├── .env.example               # Environment template
+├── next.config.ts             # Next.js + Payload config
+├── package.json               # Unified dependencies
+├── tsconfig.json              # TypeScript config
 └── README.md
 ```
 
@@ -94,42 +104,30 @@ Before you begin, ensure you have:
 
 ## ⚙️ Environment Variables
 
-### Frontend (.env.local)
+Create a `.env` file in the root directory (copy from `.env.example`):
+
 ```env
-# API Configuration
+# Database (REQUIRED)
+DATABASE_URI=postgresql://postgres:[PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres
+
+# Payload CMS (REQUIRED)
+PAYLOAD_SECRET=your-super-secret-payload-string-change-in-production
+
+# Supabase Client (Optional - for frontend features)
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# Server Configuration
 NEXT_PUBLIC_SERVER_URL=http://localhost:3000
-NEXT_PUBLIC_API_URL=http://localhost:3001
+NODE_ENV=development
 
-# Email Provider (Resend)
-RESEND_API_KEY=re_xxxxxxxxxxxx
-
-# Twilio WhatsApp
-TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-TWILIO_AUTH_TOKEN=your_twilio_auth_token
-
-# Admin Email
-ADMIN_EMAIL=shemamanase992@gmail.com
-```
-
-### Backend (.env)
-```env
-# Payload CMS
-PAYLOAD_SECRET=your-super-secret-payload-string
-
-# Supabase PostgreSQL
-DATABASE_URI=postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres
-
-# Email Provider (Resend)
+# Email Provider (Optional - Resend)
 RESEND_API_KEY=re_xxxxxxxxxxxx
 ADMIN_EMAIL=shemamanase992@gmail.com
 
-# Twilio WhatsApp
+# Twilio WhatsApp (Optional)
 TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 TWILIO_AUTH_TOKEN=your_twilio_auth_token
-
-# Server
-PORT=3001
-NEXT_PUBLIC_SERVER_URL=http://localhost:3000
 ```
 
 ## 🚀 Getting Started
@@ -140,31 +138,37 @@ git clone https://github.com/ShemaM/KimArtificialDreadlocks.git
 cd KimArtificialDreadlocks
 ```
 
-### 2. Set Up the Backend
+### 2. Install Dependencies
 ```bash
-cd backend
 npm install
+```
+
+### 3. Set Up Environment Variables
+```bash
 cp .env.example .env
 # Edit .env with your credentials
-npm run dev
 ```
 
-The Payload admin panel will be available at `http://localhost:3001/admin`
-
-### 3. Set Up the Frontend
+### 4. Run the Development Server
 ```bash
-cd frontend
-npm install
-# Create .env.local with required variables
 npm run dev
 ```
 
-The frontend will be available at `http://localhost:3000`
+The application will be available at:
+- **Customer Website:** `http://localhost:3000`
+- **Admin Panel:** `http://localhost:3000/admin`
+- **API:** `http://localhost:3000/api`
 
-### 4. Create Admin User
-1. Navigate to `http://localhost:3001/admin`
+### 5. Create Admin User
+1. Navigate to `http://localhost:3000/admin`
 2. Create your first admin user
 3. Start adding services and gallery images
+
+### 6. Build for Production
+```bash
+npm run build
+npm start
+```
 
 ## 📱 Twilio WhatsApp Sandbox Setup
 
