@@ -3,6 +3,7 @@ import { Toaster } from "sonner";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import FloatingWhatsAppWidget from "@/components/ui/FloatingWhatsAppWidget";
 
 export const metadata: Metadata = {
   title: "Kim's Dreadlocks & Nails Spa | Kitengela",
@@ -55,6 +56,7 @@ export default function RootLayout({
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <FloatingWhatsAppWidget />
         <Toaster richColors position="top-right" />
       </body>
     </html>
