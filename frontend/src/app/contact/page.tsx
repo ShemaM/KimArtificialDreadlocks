@@ -23,10 +23,13 @@ const contactInfo = [
   {
     icon: MapPin,
     title: "Visit Us",
-    details: ["Kitengela Town", "Kajiado County, Kenya"],
+    details: [
+      "Rontech Apartments, Deliverance Road, Kitengela",
+      "(Located directly in front of Flavors Dishes and Fast Food restaurant, opposite Mission Care Hospital)"
+    ],
     action: {
       label: "Get Directions",
-      href: "https://maps.google.com/?q=Kitengela+Kenya",
+      href: "https://maps.google.com/?q=Rontech+Apartments+Deliverance+Road+Kitengela",
     },
   },
   {
@@ -50,7 +53,10 @@ const contactInfo = [
   {
     icon: Clock,
     title: "Working Hours",
-    details: ["Mon - Sat: 8:00 AM - 7:00 PM", "Sunday: 10:00 AM - 5:00 PM"],
+    details: [
+      "Mon - Sat: 8:00 AM - 8:00 PM", 
+      "Sundays: Special Requests & Emergencies Only (Please call to confirm)"
+    ],
     action: null,
   },
 ];
@@ -150,10 +156,10 @@ export default function ContactPage() {
                     Find Us on the Map
                   </h3>
                   <p className="text-charcoal-light mb-4">
-                    Kitengela Town, Kajiado County, Kenya
+                    Rontech Apartments, Deliverance Road, Kitengela. Located directly in front of Flavors Dishes and Fast Food restaurant, opposite Mission Care Hospital.
                   </p>
                   <a
-                    href="https://maps.google.com/?q=Kitengela+Kenya"
+                    href="https://maps.google.com/?q=Rontech+Apartments+Deliverance+Road+Kitengela"
                     target="_blank"
                     rel="noopener noreferrer"
                   >

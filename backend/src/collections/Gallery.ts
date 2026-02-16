@@ -24,12 +24,19 @@ export const Gallery: CollectionConfig = {
       required: true,
       options: [
         { label: 'Dreadlocks', value: 'Dreadlocks' },
-        { label: 'Braids', value: 'Braids' },
+        { label: 'Styling', value: 'Styling' },
         { label: 'Nails', value: 'Nails' },
-        { label: 'Other Styles', value: 'Other Styles' },
       ],
       defaultValue: 'Dreadlocks',
       label: 'Category',
+    },
+    {
+      name: 'caption',
+      type: 'text',
+      label: 'Caption',
+      admin: {
+        description: 'Optional caption to display on the image',
+      },
     },
     {
       name: 'alt',

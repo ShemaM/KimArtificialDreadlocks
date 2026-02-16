@@ -120,6 +120,57 @@ export async function sendCustomerWhatsAppConfirmation(data: WhatsAppMessageData
 }
 
 /**
+ * Send WhatsApp status change notification to customer
+ */
+export async function sendStatusChangeWhatsApp(
+  customerPhone: string,
+  customerName: string,
+  serviceName: string,
+  bookingDate: string,
+  status: string
+): Promise<boolean> {
+  try {
+    const customerNumber = formatWhatsAppNumber(customerPhone);
+    let statusEmoji = '⏳';
+    let statusMessage = '';
+
+    if (status === 'Accepted') {
+      statusEmoji = '✅';
+      statusMessage = `Great news! Your booking has been *confirmed*. We look forward to seeing you!`;
+    } else if (status === 'Held') {
+      statusEmoji = '⏸️';
+      statusMessage = `Your booking is currently on *hold*. We will contact you soon with more details.`;
+    } else if (status === 'Declined') {
+      statusEmoji = '❌';
+      statusMessage = `Unfortunately, we cannot accommodate your booking at this time. Please contact us to reschedule.`;
+    }
+
+    const message = `${statusEmoji} *Booking Status Update*\n\n` +
+      `Hi ${customerName}!\n\n` +
+      `${statusMessage}\n\n` +
+      `📋 *Booking Details:*\n` +
+      `💇 Service: ${serviceName}\n` +
+      `📅 Date: ${bookingDate}\n` +
+      `📊 Status: *${status}*\n\n` +
+      `For any questions, please contact us:\n` +
+      `📞 +254 716 867 526\n` +
+      `📍 Rontech Apartments, Deliverance Road, Kitengela`;
+
+    await getTwilioClient().messages.create({
+      body: message,
+      from: TWILIO_WHATSAPP_NUMBER,
+      to: customerNumber,
+    });
+
+    console.log(`Status change WhatsApp sent to ${customerNumber} - Status: ${status}`);
+    return true;
+  } catch (error) {
+    console.error('Failed to send status change WhatsApp:', error);
+    return false;
+  }
+}
+
+/**
  * Send all WhatsApp notifications for a new booking
  */
 export async function sendBookingWhatsAppNotifications(data: WhatsAppMessageData): Promise<{

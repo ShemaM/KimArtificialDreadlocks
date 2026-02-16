@@ -34,9 +34,7 @@ export default function HeroSection() {
 
             {/* Description */}
             <p className="text-lg text-charcoal-light max-w-lg leading-relaxed">
-              Experience the artistry of professional hair styling and nail care
-              at Kim&apos;s Artificial Dreadlocks & Nails Spa. We bring your
-              beauty vision to life with expert techniques and premium products.
+              The Premier Destination for Congolese Artificial Dreadlocks in Kitengela & Environs.
             </p>
 
             {/* Stats */}

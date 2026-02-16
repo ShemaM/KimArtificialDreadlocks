@@ -12,76 +12,88 @@ const galleryImages = [
     image: "/images/gallery/dreadlocks-1.jpg",
     category: "Dreadlocks",
     alt: "Beautiful artificial dreadlocks - Style 1",
+    caption: "Congolese Artificial Dreadlocks - Long Style",
   },
   {
     id: "2",
     image: "/images/gallery/dreadlocks-2.jpg",
     category: "Dreadlocks",
     alt: "Long artificial dreadlocks styling",
+    caption: "Premium Dreadlock Installation",
   },
   {
     id: "3",
     image: "/images/gallery/braids-1.jpg",
-    category: "Braids",
+    category: "Styling",
     alt: "Elegant box braids design",
+    caption: "Knotless Box Braids",
   },
   {
     id: "4",
     image: "/images/gallery/braids-2.jpg",
-    category: "Braids",
+    category: "Styling",
     alt: "Knotless braids styling",
+    caption: "Braids & Styling Perfection",
   },
   {
     id: "5",
     image: "/images/gallery/nails-1.jpg",
     category: "Nails",
     alt: "Stunning nail art design - Pink theme",
+    caption: "Custom Gel Polish Design",
   },
   {
     id: "6",
     image: "/images/gallery/nails-2.jpg",
     category: "Nails",
     alt: "French tip nail extensions",
+    caption: "Classic French Manicure",
   },
   {
     id: "7",
     image: "/images/gallery/dreadlocks-1.jpg",
     category: "Dreadlocks",
     alt: "Medium length dreadlocks",
+    caption: "Medium Length Locs",
   },
   {
     id: "8",
     image: "/images/gallery/braids-1.jpg",
-    category: "Other Styles",
+    category: "Styling",
     alt: "Mixed style braids and twists",
+    caption: "Creative Cornrow Patterns",
   },
   {
     id: "9",
     image: "/images/gallery/nails-1.jpg",
     category: "Nails",
     alt: "Acrylic nail extensions with art",
+    caption: "Acrylic Extensions with Art",
   },
   {
     id: "10",
     image: "/images/gallery/braids-2.jpg",
-    category: "Braids",
+    category: "Styling",
     alt: "Passion twists styling",
+    caption: "Passion Twists",
   },
   {
     id: "11",
     image: "/images/gallery/dreadlocks-2.jpg",
-    category: "Other Styles",
+    category: "Dreadlocks",
     alt: "Loc styling and retwist",
+    caption: "Sister Locks Style",
   },
   {
     id: "12",
     image: "/images/gallery/nails-2.jpg",
     category: "Nails",
     alt: "Gel polish manicure",
+    caption: "Perfect Pedicure Finish",
   },
 ];
 
-const categories = ["All", "Dreadlocks", "Braids", "Nails", "Other Styles"];
+const categories = ["All", "Dreadlocks", "Styling", "Nails"];
 
 export default function GalleryPage() {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -168,7 +180,7 @@ export default function GalleryPage() {
                       <p className="font-playfair text-lg font-semibold">
                         {item.category}
                       </p>
-                      <p className="text-sm text-white/80">{item.alt}</p>
+                      <p className="text-sm text-white/80">{item.caption || item.alt}</p>
                     </div>
                   </div>
                 </div>
@@ -212,7 +224,7 @@ export default function GalleryPage() {
             <p className="font-playfair text-xl font-semibold">
               {selectedImage.category}
             </p>
-            <p className="text-white/80">{selectedImage.alt}</p>
+            <p className="text-white/80">{selectedImage.caption || selectedImage.alt}</p>
           </div>
         </div>
       )}
