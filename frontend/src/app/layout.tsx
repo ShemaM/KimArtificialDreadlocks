@@ -51,7 +51,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-poppins antialiased bg-cream text-charcoal">
+      <body  suppressHydrationWarning className="font-poppins antialiased bg-cream text-charcoal">
         <Navbar />
         <main>{children}</main>
         <Footer />
