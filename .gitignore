@@ -45,7 +45,3 @@ next-env.d.ts
 
 # payload
 /media
-
-# old directories (to be removed after migration)
-/frontend
-/backend

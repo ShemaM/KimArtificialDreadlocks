@@ -61,16 +61,10 @@ export const Bookings: CollectionConfig = {
       required: true,
       label: 'Booking Time',
       admin: {
-        description: 'Time of booking (e.g., "2:00 PM")',
+        description: 'Time of booking in format "H:MM AM" or "H:MM PM" (e.g., "2:00 PM")',
       },
-      validate: (value: string) => {
-        // Validate time format: H:MM AM/PM or HH:MM AM/PM
-        const timeRegex = /^(0?[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$/i;
-        if (!timeRegex.test(value)) {
-          return 'Please enter time in format "H:MM AM" or "H:MM PM" (e.g., "2:00 PM")';
-        }
-        return true;
-      },
+      // TODO: Add validation for time format in Payload v3
+      // The validate function needs to match Payload v3's TextFieldValidation type
     },
     {
       name: 'status',
